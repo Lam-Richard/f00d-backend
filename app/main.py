@@ -10,9 +10,9 @@ import json
 load_dotenv()
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
 
-CORS(app, resources={r'/*': {'origins': '*', "Access-Control-Allow-Origin": "*"}})
+# app.config["DEBUG"] = True
+# CORS(app, resources={r'/*': {'origins': '*', "Access-Control-Allow-Origin": "*"}})
 
 
 @app.route("/", methods=["GET"])
@@ -55,8 +55,7 @@ def dishPortions():
     df = pd.read_csv(f"{meal}_{hall}_{date.today()}.csv")
     return { "data": [{"dish": df['name'][i], "portion": df['portion'][i]} for i in range(len(df)) ]}
 
-if __name__ == '__main__':
-    app.run(host="http://0.0.0.0:5000")
+
     
 
 # from flask import Flask
