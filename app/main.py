@@ -7,12 +7,12 @@ import pandas as pd
 import json
 
 
-load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
 
-# app.config["DEBUG"] = True
-# CORS(app, resources={r'/*': {'origins': '*', "Access-Control-Allow-Origin": "*"}})
+app.config["DEBUG"] = True
+CORS(app, resources={r'/*': {'origins': '*', "Access-Control-Allow-Origin": "*"}})
 
 
 @app.route("/", methods=["GET"])
@@ -56,18 +56,5 @@ def dishPortions():
     return { "data": [{"dish": df['name'][i], "portion": df['portion'][i]} for i in range(len(df)) ]}
 
 
-    
-
-# from flask import Flask
-# from dotenv import load_dotenv
-# from flask_cors import CORS 
-
-# load_dotenv()
-# app = Flask(__name__)
-# CORS(app)
-
-# @app.route('/')
-# def get_current_time():
-#     return {'time': time.time()}
 
 
