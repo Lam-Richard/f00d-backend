@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 app.config["DEBUG"] = True
 CORS(app, resources={r'/*': {'origins': '*', "Access-Control-Allow-Origin": "*"}})
-
+# CORS(app)
 
 @app.route("/", methods=["GET"])
 def home():
@@ -36,7 +36,7 @@ def allData():
     meal = args.get('meal')
     hall = args.get('hall')
     df = pd.read_csv(f"{meal}_{hall}_{date.today()}.csv")
-    return { "data" : df }
+    return { "data" : json.loads(df.to_json()) }
 
 @app.route("/specific", methods=["GET"])
 def getMeal():
@@ -54,6 +54,15 @@ def dishPortions():
     hall = args.get('hall')
     df = pd.read_csv(f"{meal}_{hall}_{date.today()}.csv")
     return { "data": [{"dish": df['name'][i], "portion": df['portion'][i]} for i in range(len(df)) ]}
+
+# @app.route("/nutrients", methods=["GET"])
+# def nutrients():
+#     args = request.args
+#     meal = args.get('meal')
+#     hall = args.get('hall')
+#     df = pd.read_csv(f"{meal}_{hall}_{date.today()}.csv")
+#     print("HELLO!?!?!")
+#     return { "data": json.loads(df.iloc[0, :]['nutrients'].to_json()) }
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
